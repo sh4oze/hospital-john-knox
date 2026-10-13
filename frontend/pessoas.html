@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de pessoas | Hospital John Knox</title>
+
+  <!-- Fonte Inter (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/cadastro.css">
+</head>
+<body>
+
+  <!-- ===== CABEÇALHO ===== -->
+  <header class="cabecalho">
+    <div class="container cabecalho-conteudo">
+      <a href="index.html" class="marca">Hospital <span>John Knox</span></a>
+
+      <nav class="navegacao">
+        <a href="pessoas.html" class="ativo">Pessoas</a>
+        <a href="usuarios.html">Usuários</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Conteúdo em uma coluna centralizada -->
+  <main class="conteudo">
+
+    <!-- ===== TELA DE CADASTRO ===== -->
+    <section class="caixa cadastro">
+      <h1>Cadastro de pessoa</h1>
+      <p class="cadastro-texto">Preencha os dados abaixo para cadastrar.</p>
+
+      <form class="formulario" id="form-pessoa">
+        <label class="campo">
+          <span>Nome completo</span>
+          <input type="text" name="nome" maxlength="150" required>
+        </label>
+
+        <label class="campo">
+          <span>Data de nascimento</span>
+          <input type="date" name="nascimento" required>
+        </label>
+
+        <div class="formulario-botoes">
+          <button type="submit" class="botao botao-principal" id="botao-cadastrar">Cadastrar</button>
+        </div>
+      </form>
+
+      <!-- Mensagem de sucesso ou erro (preenchida pelo JavaScript) -->
+      <p class="mensagem" id="mensagem" hidden></p>
+    </section>
+
+    <!-- ===== LISTA DE PESSOAS ===== -->
+    <section class="caixa">
+      <div class="caixa-cabecalho">
+        <h2>Pessoas cadastradas</h2>
+        <span class="contador" id="contador">0</span>
+      </div>
+
+      <div class="tabela-rolagem" id="tabela-pessoas">
+        <table class="tabela">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Nascimento</th>
+              <th></th>
+            </tr>
+          </thead>
+          <!-- Linhas criadas pelo JavaScript com os dados do banco -->
+          <tbody id="lista-pessoas"></tbody>
+        </table>
+      </div>
+
+      <p class="lista-vazia" id="lista-vazia" hidden>Nenhuma pessoa cadastrada ainda.</p>
+    </section>
+
+  </main>
+
+  <!-- ===== RODAPÉ ===== -->
+  <footer class="rodape">
+    <div class="container">
+      Hospital John Knox · <span id="ano"></span>
+    </div>
+  </footer>
+
+  <script src="js/comum.js"></script>
+  <script src="js/pessoas.js"></script>
+</body>
+</html>

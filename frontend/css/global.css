@@ -1,0 +1,160 @@
+/* ==========================================================
+   HOSPITAL JOHN KNOX — ESTILOS GLOBAIS
+   Usado por todas as páginas.
+   1. Variáveis
+   2. Base
+   3. Estrutura (container, cabeçalho e rodapé)
+   4. Nome do hospital (marca)
+   5. Botões
+   ========================================================== */
+
+
+/* ===== 1. VARIÁVEIS =====
+   Paleta inspirada nas cores institucionais da IPB (verde e cinza).
+   O verde é usado com moderação, apenas como destaque.
+   Alterando aqui, a mudança vale para o site inteiro. */
+:root {
+  --verde: #1E6641;          /* destaque: nome, botão principal */
+  --verde-escuro: #174F32;   /* verde ao passar o mouse */
+  --verde-claro: #EAF2ED;    /* fundo de mensagens de sucesso */
+  --vermelho: #B42318;       /* erros e botão de excluir */
+  --vermelho-claro: #FEF3F2; /* fundo de mensagens de erro */
+  --grafite: #2E3338;        /* títulos e texto principal */
+  --cinza: #646B68;          /* textos secundários */
+  --cinza-claro: #F4F5F4;    /* fundos alternados */
+  --borda: #E2E5E3;          /* bordas e linhas */
+  --branco: #FFFFFF;         /* fundo geral */
+
+  --raio: 8px;
+  --sombra: 0 8px 24px -12px rgba(46, 51, 56, 0.2);
+  --transicao: 0.2s ease;
+}
+
+
+/* ===== 2. BASE ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--grafite);
+  background: var(--branco);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Garante que elementos com o atributo "hidden" fiquem sempre ocultos,
+   mesmo quando uma classe define "display" (ex.: .botao) */
+[hidden] {
+  display: none !important;
+}
+
+
+/* ===== 3. ESTRUTURA ===== */
+
+/* Centraliza o conteúdo e limita a largura em telas grandes */
+.container {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.cabecalho {
+  background: var(--branco);
+  border-bottom: 1px solid var(--borda);
+}
+
+.cabecalho-conteudo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+}
+
+.rodape {
+  padding: 24px 0;
+  font-size: 14px;
+  color: var(--cinza);
+  background: var(--branco);
+  border-top: 1px solid var(--borda);
+}
+
+@media (max-width: 700px) {
+  .container {
+    padding: 0 16px;
+  }
+}
+
+
+/* ===== 4. NOME DO HOSPITAL (MARCA) =====
+   "Hospital" em grafite e "John Knox" em verde. */
+.marca {
+  font-size: 19px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.marca span {
+  color: var(--verde);
+}
+
+
+/* ===== 5. BOTÕES ===== */
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 22px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background var(--transicao), border-color var(--transicao);
+}
+
+/* Botão bloqueado enquanto uma ação está em andamento */
+.botao:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* Botão cheio, em verde */
+.botao-principal {
+  background: var(--verde);
+  color: var(--branco);
+}
+
+.botao-principal:hover:not(:disabled) {
+  background: var(--verde-escuro);
+}
+
+/* Botão só com contorno */
+.botao-contorno {
+  background: var(--branco);
+  border-color: var(--borda);
+}
+
+.botao-contorno:hover {
+  border-color: var(--grafite);
+}

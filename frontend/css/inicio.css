@@ -1,0 +1,134 @@
+/* ==========================================================
+   HOSPITAL JOHN KNOX — ESTILOS DA PÁGINA INICIAL (index.html)
+   Cores, estrutura, marca e botões ficam em global.css.
+   1. Ícone de usuário
+   2. Apresentação
+   3. Perfis (pacientes e médicos)
+   4. Responsividade
+   ========================================================== */
+
+
+/* ===== 1. ÍCONE DE USUÁRIO =====
+   Link redondo no canto do cabeçalho que leva ao cadastro. */
+.botao-usuario {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  transition: background var(--transicao);
+}
+
+.botao-usuario .material-symbols-rounded {
+  font-size: 30px;
+}
+
+.botao-usuario:hover {
+  background: var(--cinza-claro);
+}
+
+
+/* ===== 2. APRESENTAÇÃO =====
+   Título, texto e botões centralizados na página. */
+.apresentacao {
+  padding: 88px 0 80px;
+  text-align: center;
+}
+
+.apresentacao h1 {
+  max-width: 620px;
+  margin: 0 auto 16px;
+  font-size: 40px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.apresentacao p {
+  max-width: 520px;
+  margin: 0 auto;
+  font-size: 18px;
+  color: var(--cinza);
+}
+
+.botoes {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+
+/* ===== 3. PERFIS (PACIENTES E MÉDICOS) ===== */
+.perfis {
+  padding: 64px 0;
+  background: var(--cinza-claro);
+  border-top: 1px solid var(--borda);
+}
+
+/* Duas colunas lado a lado */
+.grade-perfis {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.perfil {
+  padding: 28px 32px;
+  background: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+}
+
+.perfil h2 {
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Lista com marcadores em verde */
+.perfil ul {
+  padding-left: 18px;
+  color: var(--cinza);
+}
+
+.perfil li {
+  padding: 4px 0;
+}
+
+.perfil li::marker {
+  color: var(--verde);
+}
+
+
+/* ===== 4. RESPONSIVIDADE ===== */
+@media (max-width: 700px) {
+  .apresentacao {
+    padding: 56px 0;
+  }
+
+  .apresentacao h1 {
+    font-size: 30px;
+  }
+
+  .apresentacao p {
+    font-size: 16px;
+  }
+
+  /* Botões um embaixo do outro */
+  .botoes {
+    flex-direction: column;
+  }
+
+  .perfis {
+    padding: 40px 0;
+  }
+
+  .grade-perfis {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .perfil {
+    padding: 24px;
+  }
+}
