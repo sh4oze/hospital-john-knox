@@ -1,14 +1,10 @@
 {
   "name": "hospital-john-knox-backend",
   "version": "1.0.0",
-  "description": "Back-end do sistema do Hospital John Knox",
+  "description": "Back-end do sistema do Hospital John Knox (só Node nativo)",
   "main": "servidor.js",
   "private": true,
   "scripts": {
     "start": "node --env-file=.env servidor.js"
-  },
-  "dependencies": {
-    "express": "^5.2.1",
-    "mysql2": "^3.24.4"
   }
 }

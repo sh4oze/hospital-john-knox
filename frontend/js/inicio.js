@@ -1,6 +1,3 @@
-/* ==========================================================
-   HOSPITAL JOHN KNOX — SCRIPT DA PÁGINA INICIAL (index.html)
-   Mostra o ano atual no rodapé.
-   ========================================================== */
+// Ano no rodapé da página inicial
 
 document.getElementById('ano').textContent = new Date().getFullYear();

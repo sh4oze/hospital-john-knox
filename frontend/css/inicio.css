@@ -1,15 +1,7 @@
-/* ==========================================================
-   HOSPITAL JOHN KNOX — ESTILOS DA PÁGINA INICIAL (index.html)
-   Cores, estrutura, marca e botões ficam em global.css.
-   1. Ícone de usuário
-   2. Apresentação
-   3. Perfis (pacientes e médicos)
-   4. Responsividade
-   ========================================================== */
+/* Estilos da página inicial */
 
 
-/* ===== 1. ÍCONE DE USUÁRIO =====
-   Link redondo no canto do cabeçalho que leva ao cadastro. */
+/* Ícone de usuário */
 .botao-usuario {
   display: grid;
   place-items: center;
@@ -28,19 +20,19 @@
 }
 
 
-/* ===== 2. APRESENTAÇÃO =====
-   Título, texto e botões centralizados na página. */
+/* Apresentação */
 .apresentacao {
   padding: 88px 0 80px;
   text-align: center;
 }
 
 .apresentacao h1 {
-  max-width: 620px;
+  max-width: 640px;
   margin: 0 auto 16px;
-  font-size: 40px;
+  font-size: 42px;
   line-height: 1.2;
   font-weight: 700;
+  text-wrap: balance; /* divide o título em linhas de tamanho parecido */
 }
 
 .apresentacao p {
@@ -58,49 +50,74 @@
 }
 
 
-/* ===== 3. PERFIS (PACIENTES E MÉDICOS) ===== */
-.perfis {
-  padding: 64px 0;
+/* Como usar */
+.etapas {
+  padding: 64px 0 72px;
+  text-align: center;
   background: var(--cinza-claro);
   border-top: 1px solid var(--borda);
 }
 
-/* Duas colunas lado a lado */
-.grade-perfis {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+.etapas h2 {
+  font-size: 24px;
+  font-weight: 700;
 }
 
-.perfil {
-  padding: 28px 32px;
-  background: var(--branco);
-  border: 1px solid var(--borda);
-  border-radius: var(--raio);
-}
-
-.perfil h2 {
-  margin-bottom: 12px;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-/* Lista com marcadores em verde */
-.perfil ul {
-  padding-left: 18px;
+.etapas-texto {
+  max-width: 560px;
+  margin: 8px auto 36px;
   color: var(--cinza);
 }
 
-.perfil li {
-  padding: 4px 0;
+/* Quatro colunas */
+.lista-etapas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  list-style: none;
+  text-align: left;
 }
 
-.perfil li::marker {
+/* Cada etapa é um link para a tela */
+.etapa {
+  display: block;
+  height: 100%;
+  padding: 22px;
+  font-size: 14px;
+  color: var(--cinza);
+  background: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  transition: border-color var(--transicao);
+}
+
+.etapa:hover {
+  border-color: var(--verde);
+}
+
+.etapa strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--grafite);
+}
+
+/* Número da etapa */
+.etapa strong span {
+  margin-right: 4px;
   color: var(--verde);
 }
 
 
-/* ===== 4. RESPONSIVIDADE ===== */
+/* Tablet: etapas em duas colunas */
+@media (max-width: 900px) {
+  .lista-etapas {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Celular */
 @media (max-width: 700px) {
   .apresentacao {
     padding: 56px 0;
@@ -119,16 +136,12 @@
     flex-direction: column;
   }
 
-  .perfis {
-    padding: 40px 0;
+  .etapas {
+    padding: 40px 0 48px;
   }
 
-  .grade-perfis {
+  .lista-etapas {
     grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .perfil {
-    padding: 24px;
+    gap: 12px;
   }
 }

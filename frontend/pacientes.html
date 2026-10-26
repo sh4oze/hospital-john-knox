@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pacientes | Hospital John Knox</title>
+
+  <!-- Fonte Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/cadastro.css">
+</head>
+<body>
+
+  <!-- Cabeçalho -->
+  <header class="cabecalho">
+    <div class="container cabecalho-conteudo">
+      <a href="index.html" class="marca">Hospital <span>John Knox</span></a>
+
+      <nav class="navegacao">
+        <a href="pessoas.html">Pessoas</a>
+        <a href="usuarios.html">Usuários</a>
+        <a href="pacientes.html" class="ativo">Pacientes</a>
+        <a href="agendamentos.html">Agendamentos</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="conteudo">
+
+    <!-- Formulário (cadastro e edição) -->
+    <section class="caixa cadastro">
+      <h1 id="titulo-formulario">Cadastro de paciente</h1>
+      <p class="cadastro-texto" id="texto-formulario">Escolha a pessoa e complete os dados do paciente.</p>
+
+      <form class="formulario" id="form-paciente">
+        <label class="campo">
+          <span>Pessoa</span>
+          <select name="pessoa_id" id="select-pessoa" required></select>
+        </label>
+
+        <label class="campo">
+          <span>CPF</span>
+          <input type="text" name="cpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00" autocomplete="off" required>
+        </label>
+
+        <label class="campo">
+          <span>Telefone</span>
+          <input type="tel" name="telefone" inputmode="numeric" maxlength="15" placeholder="(00) 00000-0000" required>
+        </label>
+
+        <label class="campo">
+          <span>Convênio</span>
+          <input type="text" name="convenio" maxlength="100" required>
+          <small class="dica">Se o paciente não tiver convênio, escreva "Particular".</small>
+        </label>
+
+        <div class="formulario-botoes">
+          <button type="submit" class="botao botao-principal" id="botao-salvar">Cadastrar</button>
+          <button type="button" class="botao botao-contorno" id="botao-cancelar" hidden>Cancelar edição</button>
+        </div>
+      </form>
+
+      <!-- Mensagem de sucesso ou erro -->
+      <p class="mensagem" id="mensagem" hidden></p>
+    </section>
+
+    <!-- Lista de pacientes -->
+    <section class="caixa">
+      <div class="caixa-cabecalho">
+        <h2>Pacientes cadastrados</h2>
+        <span class="contador" id="contador">0</span>
+      </div>
+
+      <div class="tabela-rolagem" id="tabela-pacientes">
+        <table class="tabela">
+          <thead>
+            <tr>
+              <th>Paciente</th>
+              <th>Contato</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="lista-pacientes"></tbody>
+        </table>
+      </div>
+
+      <p class="lista-vazia" id="lista-vazia" hidden>Nenhum paciente cadastrado ainda.</p>
+    </section>
+
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="rodape">
+    <div class="container">
+      Hospital John Knox · <span id="ano"></span>
+    </div>
+  </footer>
+
+  <script src="js/comum.js"></script>
+  <script src="js/pacientes.js"></script>
+</body>
+</html>

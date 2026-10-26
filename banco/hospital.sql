@@ -1,10 +1,7 @@
--- ==========================================================
--- HOSPITAL JOHN KNOX — BANCO DE DADOS (MySQL)
--- Script de criação do banco e das tabelas.
--- ==========================================================
+-- Banco de dados do Hospital John Knox (MySQL)
 
 
--- Cria o banco, caso ainda não exista.
+-- Cria o banco
 CREATE DATABASE IF NOT EXISTS hospital_john_knox
   DEFAULT CHARACTER SET utf8mb4
   DEFAULT COLLATE utf8mb4_unicode_ci;
@@ -12,40 +9,77 @@ CREATE DATABASE IF NOT EXISTS hospital_john_knox
 USE hospital_john_knox;
 
 
--- ----------------------------------------------------------
--- TABELA: pessoas
--- Dados básicos de cada pessoa cadastrada no sistema.
--- ----------------------------------------------------------
+-- Pessoas
 CREATE TABLE IF NOT EXISTS pessoas (
-  id               INT UNSIGNED  NOT NULL AUTO_INCREMENT,  -- identificador único, gerado automaticamente
-  nome             VARCHAR(150)  NOT NULL,                 -- nome completo
-  nascimento       DATE          NOT NULL,                 -- data de nascimento (AAAA-MM-DD)
-  data_criacao     DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,                              -- preenchida ao cadastrar
-  data_modificacao DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  -- atualizada a cada alteração
+  id               INT UNSIGNED  NOT NULL AUTO_INCREMENT,
+  nome             VARCHAR(150)  NOT NULL,
+  nascimento       DATE          NOT NULL,
+  data_criacao     DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  data_modificacao DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY (id)
 ) ENGINE = InnoDB;
 
 
--- ----------------------------------------------------------
--- TABELA: usuarios
--- Acesso ao sistema. Cada usuário pertence a uma pessoa.
--- ----------------------------------------------------------
+-- Usuários (cada um pertence a uma pessoa)
 CREATE TABLE IF NOT EXISTS usuarios (
-  id               INT UNSIGNED  NOT NULL AUTO_INCREMENT,  -- identificador único, gerado automaticamente
-  pessoa_id        INT UNSIGNED  NOT NULL,                 -- pessoa dona deste usuário (tabela pessoas)
-  login            VARCHAR(50)   NOT NULL,                 -- nome de acesso, não pode se repetir
-  senha            VARCHAR(255)  NOT NULL,                 -- senha criptografada (nunca em texto puro)
-  tipo_usuario     ENUM('admin', 'medico') NOT NULL,       -- perfil de acesso
-  data_criacao     DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,                              -- preenchida ao cadastrar
-  data_modificacao DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  -- atualizada a cada alteração
+  id               INT UNSIGNED  NOT NULL AUTO_INCREMENT,
+  pessoa_id        INT UNSIGNED  NOT NULL,
+  login            VARCHAR(50)   NOT NULL,
+  senha            VARCHAR(255)  NOT NULL,                 -- criptografada
+  tipo_usuario     ENUM('admin', 'medico') NOT NULL,
+  data_criacao     DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  data_modificacao DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY (id),
-  UNIQUE KEY uk_usuarios_login (login),          -- dois usuários não podem ter o mesmo login
-  UNIQUE KEY uk_usuarios_pessoa (pessoa_id),     -- cada pessoa tem no máximo um usuário
+  UNIQUE KEY uk_usuarios_login (login),
+  UNIQUE KEY uk_usuarios_pessoa (pessoa_id),
 
-  -- Liga o usuário à pessoa. Se a pessoa for excluída, o usuário dela também é.
+  -- Se a pessoa for excluída, o usuário também é
   CONSTRAINT fk_usuarios_pessoa
     FOREIGN KEY (pessoa_id) REFERENCES pessoas (id)
+    ON DELETE CASCADE
+) ENGINE = InnoDB;
+
+
+-- Pacientes (cada um é uma pessoa)
+CREATE TABLE IF NOT EXISTS pacientes (
+  id               INT UNSIGNED  NOT NULL AUTO_INCREMENT,
+  pessoa_id        INT UNSIGNED  NOT NULL,
+  cpf              CHAR(11)      NOT NULL,                 -- só números
+  telefone         VARCHAR(11)   NOT NULL,                 -- só números, com DDD
+  convenio         VARCHAR(100)  NOT NULL,
+  data_criacao     DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  data_modificacao DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_pacientes_cpf (cpf),
+  UNIQUE KEY uk_pacientes_pessoa (pessoa_id),
+
+  -- Se a pessoa for excluída, o paciente também é
+  CONSTRAINT fk_pacientes_pessoa
+    FOREIGN KEY (pessoa_id) REFERENCES pessoas (id)
+    ON DELETE CASCADE
+) ENGINE = InnoDB;
+
+
+-- Agendamentos (consulta entre um paciente e um médico)
+CREATE TABLE IF NOT EXISTS agendamentos (
+  id               INT UNSIGNED  NOT NULL AUTO_INCREMENT,
+  paciente_id      INT UNSIGNED  NOT NULL,
+  medico_id        INT UNSIGNED  NOT NULL,                 -- usuário do tipo medico
+  data_hora        DATETIME      NOT NULL,
+  status           ENUM('agendado', 'realizado', 'cancelado') NOT NULL DEFAULT 'agendado',
+  data_criacao     DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  data_modificacao DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY (id),
+
+  -- Se o paciente ou o médico for excluído, os agendamentos dele também são
+  CONSTRAINT fk_agendamentos_paciente
+    FOREIGN KEY (paciente_id) REFERENCES pacientes (id)
+    ON DELETE CASCADE,
+  CONSTRAINT fk_agendamentos_medico
+    FOREIGN KEY (medico_id) REFERENCES usuarios (id)
     ON DELETE CASCADE
 ) ENGINE = InnoDB;

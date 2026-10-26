@@ -1,21 +1,16 @@
-/* ==========================================================
-   HOSPITAL JOHN KNOX — SCRIPT DA TELA DE USUÁRIOS (usuarios.html)
-   CRUD completo: listar, cadastrar, editar e excluir usuários
-   no banco de dados MySQL, por meio da API do back-end.
-   Funções de apoio (mensagens, datas, tabela) ficam em comum.js.
-   ========================================================== */
+// Tela de usuários: listar, cadastrar, editar e excluir
 
-// Endereços da API no back-end
+// Endereços da API
 const API_USUARIOS = '/api/usuarios';
 const API_PESSOAS = '/api/pessoas';
 
-// Nome exibido para cada tipo de usuário
+// Nome de cada tipo na tela
 const NOMES_DOS_TIPOS = {
   admin: 'Administrador',
   medico: 'Médico'
 };
 
-// Elementos da página usados neste arquivo
+// Elementos da página
 const formulario = document.getElementById('form-usuario');
 const tituloFormulario = document.getElementById('titulo-formulario');
 const textoFormulario = document.getElementById('texto-formulario');
@@ -29,58 +24,38 @@ const tabela = document.getElementById('tabela-usuarios');
 const lista = document.getElementById('lista-usuarios');
 const listaVazia = document.getElementById('lista-vazia');
 
-// Id do usuário em edição. null = o formulário está cadastrando.
+// Id em edição (null quando está cadastrando)
 let idEmEdicao = null;
 
 
-/* ===== PESSOAS (lista de seleção) ===== */
+// Preenche a lista de pessoas
 async function carregarPessoas() {
-  const resposta = await fetch(API_PESSOAS);
+  const pessoas = await buscarLista(API_PESSOAS);
 
-  if (!resposta.ok) {
-    throw new Error();
-  }
-
-  const pessoas = await resposta.json();
-
-  // Primeira opção: instrução para o usuário
-  const primeira = new Option(
-    pessoas.length > 0 ? 'Selecione uma pessoa' : 'Cadastre uma pessoa primeiro',
-    ''
-  );
-  selectPessoa.replaceChildren(primeira);
-
-  // Uma opção para cada pessoa (new Option usa texto puro, não HTML)
-  pessoas.forEach(function (pessoa) {
-    selectPessoa.append(new Option(pessoa.nome, pessoa.id));
+  preencherSelect(selectPessoa, pessoas, 'Selecione uma pessoa', 'Cadastre uma pessoa primeiro', function (pessoa) {
+    return pessoa.nome;
   });
 }
 
 
-/* ===== LISTAR USUÁRIOS ===== */
+// Lista de usuários
 async function carregarUsuarios() {
-  const resposta = await fetch(API_USUARIOS);
-
-  if (!resposta.ok) {
-    throw new Error();
-  }
-
-  mostrarUsuarios(await resposta.json());
+  mostrarUsuarios(await buscarLista(API_USUARIOS));
 }
 
-// Monta uma linha da tabela para cada usuário
+// Monta a tabela
 function mostrarUsuarios(usuarios) {
   lista.innerHTML = '';
   contador.textContent = usuarios.length;
 
-  // Sem usuários: esconde a tabela e mostra o aviso
+  // Sem registros, mostra o aviso no lugar da tabela
   tabela.hidden = usuarios.length === 0;
   listaVazia.hidden = usuarios.length > 0;
 
   usuarios.forEach(function (usuario) {
     const linha = document.createElement('tr');
 
-    // Destaca a linha que está aberta no formulário
+    // Destaca a linha em edição
     if (usuario.id === idEmEdicao) {
       linha.className = 'em-edicao';
     }
@@ -102,7 +77,7 @@ function mostrarUsuarios(usuarios) {
   });
 }
 
-// Célula com a etiqueta do tipo (Administrador / Médico)
+// Célula com a etiqueta do tipo
 function criarCelulaTipo(tipo) {
   const celula = document.createElement('td');
   const etiqueta = document.createElement('span');
@@ -114,7 +89,7 @@ function criarCelulaTipo(tipo) {
   return celula;
 }
 
-// Recarrega a lista mostrando aviso se o servidor não responder
+// Recarrega a lista
 async function atualizarLista() {
   try {
     await carregarUsuarios();
@@ -124,8 +99,7 @@ async function atualizarLista() {
 }
 
 
-/* ===== MODO DE EDIÇÃO =====
-   Preenche o formulário com os dados do usuário escolhido. */
+// Abre o registro no formulário para editar
 function iniciarEdicao(usuario) {
   idEmEdicao = usuario.id;
 
@@ -145,7 +119,7 @@ function iniciarEdicao(usuario) {
 
   formulario.scrollIntoView({ behavior: 'smooth', block: 'center' });
   formulario.elements.login.focus();
-  atualizarLista(); // para destacar a linha em edição
+  atualizarLista(); // destaca a linha
 }
 
 // Volta o formulário ao modo de cadastro
@@ -168,9 +142,9 @@ botaoCancelar.addEventListener('click', function () {
 });
 
 
-/* ===== SALVAR (cadastrar ou editar) ===== */
+// Salvar (cadastro ou edição)
 formulario.addEventListener('submit', async function (evento) {
-  evento.preventDefault(); // impede a página de recarregar
+  evento.preventDefault(); // não recarrega a página
 
   const editando = idEmEdicao !== null;
 
@@ -181,11 +155,11 @@ formulario.addEventListener('submit', async function (evento) {
     tipo_usuario: formulario.elements.tipo_usuario.value
   };
 
-  // Cadastro usa POST; edição usa PUT no endereço do usuário
+  // POST para cadastrar, PUT para editar
   const endereco = editando ? `${API_USUARIOS}/${idEmEdicao}` : API_USUARIOS;
   const metodo = editando ? 'PUT' : 'POST';
 
-  // Bloqueia o botão para evitar envio duplicado com vários cliques
+  // Evita clique duplo
   botaoSalvar.disabled = true;
 
   try {
@@ -211,13 +185,15 @@ formulario.addEventListener('submit', async function (evento) {
 });
 
 
-/* ===== EXCLUIR USUÁRIO =====
-   Pede confirmação e apaga o usuário do banco de dados.
-   A pessoa ligada a ele continua cadastrada. */
+// Exclui o usuário depois de confirmar
 async function excluirUsuario(usuario) {
-  const confirmou = confirm(
-    `Excluir o usuário "${usuario.login}"?\nA pessoa ${usuario.pessoa_nome} continua cadastrada.`
-  );
+  let aviso = `Excluir o usuário "${usuario.login}"?\nA pessoa ${usuario.pessoa_nome} continua cadastrada.`;
+
+  if (usuario.tipo_usuario === 'medico') {
+    aviso += '\nOs agendamentos deste médico também serão excluídos.';
+  }
+
+  const confirmou = confirm(aviso);
 
   if (!confirmou) {
     return;
@@ -229,7 +205,7 @@ async function excluirUsuario(usuario) {
     if (!resposta.ok) {
       mostrarMensagem(await lerErro(resposta), 'erro');
     } else {
-      // Se o usuário excluído estava aberto no formulário, limpa o formulário
+      // Se estava em edição, limpa o formulário
       if (usuario.id === idEmEdicao) {
         encerrarEdicao();
       }
@@ -244,8 +220,7 @@ async function excluirUsuario(usuario) {
 }
 
 
-/* ===== INÍCIO =====
-   Carrega as pessoas (para a lista de seleção) e os usuários. */
+// Início
 Promise.all([carregarPessoas(), carregarUsuarios()]).catch(function () {
   mostrarMensagem('Não foi possível carregar os dados. Verifique se o servidor está ligado.', 'erro');
 });

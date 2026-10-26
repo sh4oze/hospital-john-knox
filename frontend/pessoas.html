@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro de pessoas | Hospital John Knox</title>
+  <title>Pessoas | Hospital John Knox</title>
 
-  <!-- Fonte Inter (Google Fonts) -->
+  <!-- Fonte Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
@@ -15,7 +15,7 @@
 </head>
 <body>
 
-  <!-- ===== CABEÇALHO ===== -->
+  <!-- Cabeçalho -->
   <header class="cabecalho">
     <div class="container cabecalho-conteudo">
       <a href="index.html" class="marca">Hospital <span>John Knox</span></a>
@@ -23,17 +23,18 @@
       <nav class="navegacao">
         <a href="pessoas.html" class="ativo">Pessoas</a>
         <a href="usuarios.html">Usuários</a>
+        <a href="pacientes.html">Pacientes</a>
+        <a href="agendamentos.html">Agendamentos</a>
       </nav>
     </div>
   </header>
 
-  <!-- Conteúdo em uma coluna centralizada -->
   <main class="conteudo">
 
-    <!-- ===== TELA DE CADASTRO ===== -->
+    <!-- Formulário (cadastro e edição) -->
     <section class="caixa cadastro">
-      <h1>Cadastro de pessoa</h1>
-      <p class="cadastro-texto">Preencha os dados abaixo para cadastrar.</p>
+      <h1 id="titulo-formulario">Cadastro de pessoa</h1>
+      <p class="cadastro-texto" id="texto-formulario">Preencha os dados abaixo para cadastrar.</p>
 
       <form class="formulario" id="form-pessoa">
         <label class="campo">
@@ -47,15 +48,16 @@
         </label>
 
         <div class="formulario-botoes">
-          <button type="submit" class="botao botao-principal" id="botao-cadastrar">Cadastrar</button>
+          <button type="submit" class="botao botao-principal" id="botao-salvar">Cadastrar</button>
+          <button type="button" class="botao botao-contorno" id="botao-cancelar" hidden>Cancelar edição</button>
         </div>
       </form>
 
-      <!-- Mensagem de sucesso ou erro (preenchida pelo JavaScript) -->
+      <!-- Mensagem de sucesso ou erro -->
       <p class="mensagem" id="mensagem" hidden></p>
     </section>
 
-    <!-- ===== LISTA DE PESSOAS ===== -->
+    <!-- Lista de pessoas -->
     <section class="caixa">
       <div class="caixa-cabecalho">
         <h2>Pessoas cadastradas</h2>
@@ -71,7 +73,6 @@
               <th></th>
             </tr>
           </thead>
-          <!-- Linhas criadas pelo JavaScript com os dados do banco -->
           <tbody id="lista-pessoas"></tbody>
         </table>
       </div>
@@ -81,7 +82,7 @@
 
   </main>
 
-  <!-- ===== RODAPÉ ===== -->
+  <!-- Rodapé -->
   <footer class="rodape">
     <div class="container">
       Hospital John Knox · <span id="ano"></span>

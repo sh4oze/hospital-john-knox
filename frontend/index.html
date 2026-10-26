@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hospital John Knox</title>
 
-  <!-- Fonte Inter e ícones Material Symbols (Google Fonts) -->
+  <!-- Fonte Inter e ícones do Google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
@@ -16,13 +16,13 @@
 </head>
 <body>
 
-  <!-- ===== CABEÇALHO ===== -->
+  <!-- Cabeçalho -->
   <header class="cabecalho">
     <div class="container cabecalho-conteudo">
 
       <a href="index.html" class="marca">Hospital <span>John Knox</span></a>
 
-      <!-- Ícone de usuário: leva para o cadastro de pessoas -->
+      <!-- Ícone de usuário -->
       <a href="pessoas.html" class="botao-usuario" aria-label="Cadastro de pessoas" title="Cadastro de pessoas">
         <span class="material-symbols-rounded">account_circle</span>
       </a>
@@ -32,7 +32,7 @@
 
   <main>
 
-    <!-- ===== APRESENTAÇÃO ===== -->
+    <!-- Apresentação -->
     <section class="apresentacao">
       <div class="container">
         <h1>Sistema de gestão do Hospital John Knox</h1>
@@ -42,38 +42,52 @@
         </p>
         <div class="botoes">
           <a href="pessoas.html" class="botao botao-principal">Cadastrar pessoa</a>
+          <a href="agendamentos.html" class="botao botao-contorno">Ver agendamentos</a>
         </div>
       </div>
     </section>
 
-    <!-- ===== O QUE CADA PERFIL PODE FAZER ===== -->
-    <section class="perfis">
-      <div class="container grade-perfis">
+    <!-- Como usar (na ordem dos cadastros) -->
+    <section class="etapas">
+      <div class="container">
+        <h2>Como usar o sistema</h2>
+        <p class="etapas-texto">
+          Comece pelo cadastro de pessoas. Usuários e pacientes são criados a partir delas,
+          e cada agendamento liga um paciente a um médico.
+        </p>
 
-        <article class="perfil">
-          <h2>Para pacientes</h2>
-          <ul>
-            <li>Cadastro com os dados pessoais</li>
-            <li>Marcação de consultas com os médicos do hospital</li>
-            <li>Acompanhamento dos horários agendados</li>
-          </ul>
-        </article>
-
-        <article class="perfil">
-          <h2>Para médicos</h2>
-          <ul>
-            <li>Cadastro com CRM e especialidade</li>
-            <li>Agenda semanal de atendimentos</li>
-            <li>Lista das consultas marcadas</li>
-          </ul>
-        </article>
-
+        <ol class="lista-etapas">
+          <li>
+            <a href="pessoas.html" class="etapa">
+              <strong><span>1</span> Pessoas</strong>
+              Nome e data de nascimento. Todo cadastro começa aqui.
+            </a>
+          </li>
+          <li>
+            <a href="usuarios.html" class="etapa">
+              <strong><span>2</span> Usuários</strong>
+              Acesso ao sistema para administradores e médicos.
+            </a>
+          </li>
+          <li>
+            <a href="pacientes.html" class="etapa">
+              <strong><span>3</span> Pacientes</strong>
+              CPF, telefone e convênio de quem é atendido.
+            </a>
+          </li>
+          <li>
+            <a href="agendamentos.html" class="etapa">
+              <strong><span>4</span> Agendamentos</strong>
+              Consultas entre paciente e médico, com o status de cada uma.
+            </a>
+          </li>
+        </ol>
       </div>
     </section>
 
   </main>
 
-  <!-- ===== RODAPÉ ===== -->
+  <!-- Rodapé -->
   <footer class="rodape">
     <div class="container">
       Hospital John Knox · <span id="ano"></span>

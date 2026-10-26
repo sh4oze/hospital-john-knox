@@ -1,29 +1,18 @@
-/* ==========================================================
-   HOSPITAL JOHN KNOX — ESTILOS GLOBAIS
-   Usado por todas as páginas.
-   1. Variáveis
-   2. Base
-   3. Estrutura (container, cabeçalho e rodapé)
-   4. Nome do hospital (marca)
-   5. Botões
-   ========================================================== */
+/* Estilos usados em todas as páginas */
 
 
-/* ===== 1. VARIÁVEIS =====
-   Paleta inspirada nas cores institucionais da IPB (verde e cinza).
-   O verde é usado com moderação, apenas como destaque.
-   Alterando aqui, a mudança vale para o site inteiro. */
+/* Cores (inspiradas na IPB) */
 :root {
-  --verde: #1E6641;          /* destaque: nome, botão principal */
-  --verde-escuro: #174F32;   /* verde ao passar o mouse */
-  --verde-claro: #EAF2ED;    /* fundo de mensagens de sucesso */
-  --vermelho: #B42318;       /* erros e botão de excluir */
-  --vermelho-claro: #FEF3F2; /* fundo de mensagens de erro */
-  --grafite: #2E3338;        /* títulos e texto principal */
-  --cinza: #646B68;          /* textos secundários */
-  --cinza-claro: #F4F5F4;    /* fundos alternados */
-  --borda: #E2E5E3;          /* bordas e linhas */
-  --branco: #FFFFFF;         /* fundo geral */
+  --verde: #1E6641;
+  --verde-escuro: #174F32;
+  --verde-claro: #EAF2ED;
+  --vermelho: #B42318;
+  --vermelho-claro: #FEF3F2;
+  --grafite: #2E3338;
+  --cinza: #646B68;
+  --cinza-claro: #F4F5F4;
+  --borda: #E2E5E3;
+  --branco: #FFFFFF;
 
   --raio: 8px;
   --sombra: 0 8px 24px -12px rgba(46, 51, 56, 0.2);
@@ -31,7 +20,7 @@
 }
 
 
-/* ===== 2. BASE ===== */
+/* Base */
 * {
   margin: 0;
   padding: 0;
@@ -63,16 +52,15 @@ button {
   cursor: pointer;
 }
 
-/* Garante que elementos com o atributo "hidden" fiquem sempre ocultos,
-   mesmo quando uma classe define "display" (ex.: .botao) */
+/* hidden sempre esconde, mesmo se a classe definir display */
 [hidden] {
   display: none !important;
 }
 
 
-/* ===== 3. ESTRUTURA ===== */
+/* Estrutura */
 
-/* Centraliza o conteúdo e limita a largura em telas grandes */
+/* Centraliza e limita a largura */
 .container {
   width: 100%;
   max-width: 1040px;
@@ -107,8 +95,7 @@ button {
 }
 
 
-/* ===== 4. NOME DO HOSPITAL (MARCA) =====
-   "Hospital" em grafite e "John Knox" em verde. */
+/* Nome do hospital */
 .marca {
   font-size: 19px;
   font-weight: 700;
@@ -120,7 +107,7 @@ button {
 }
 
 
-/* ===== 5. BOTÕES ===== */
+/* Botões */
 .botao {
   display: inline-flex;
   align-items: center;
@@ -133,13 +120,13 @@ button {
   transition: background var(--transicao), border-color var(--transicao);
 }
 
-/* Botão bloqueado enquanto uma ação está em andamento */
+/* Botão desativado enquanto salva */
 .botao:disabled {
   opacity: 0.6;
   cursor: wait;
 }
 
-/* Botão cheio, em verde */
+/* Botão verde */
 .botao-principal {
   background: var(--verde);
   color: var(--branco);
